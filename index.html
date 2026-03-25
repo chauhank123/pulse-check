@@ -76,12 +76,12 @@
             initChart();
 
             // 1. Get initial totals
-            const { data } = await supabase.from('votes').select('choice');
+            const { data } = await supabaseClient.from('votes').select('choice');
             data.forEach(v => voteCounts[v.choice]++);
             updateChart();
 
             // 2. Listen for "Realtime" changes
-            supabase
+            supabaseClient
                 .channel('live-votes')
                 .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'votes' }, payload => {
                     voteCounts[payload.new.choice]++;
