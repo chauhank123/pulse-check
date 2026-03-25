@@ -1,0 +1,25 @@
+<h1>Hello world </h1>
+
+import { createClient } from '@supabase/supabase-js'
+
+// 1. Initialize Supabase (You get these keys from your Supabase Dashboard)
+const supabaseUrl = 'https://pahedftgixbhrkpvwbag.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhaGVkZnRnaXhiaHJrcHZ3YmFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMDY1NTMsImV4cCI6MjA4OTg4MjU1M30.6f673eZTFSFvErKvslm3rYf_BIIkXUSxOLCoY1E_RNQ'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+// 2. The function to record a vote
+async function castVote(userChoice) {
+  const { data, error } = await supabase
+    .from('votes') // The name of your table
+    .insert([
+      { choice: userChoice } // The column and the value
+    ])
+
+  if (error) {
+    console.error('Error casting vote:', error.message)
+    alert('Something went wrong!')
+  } else {
+    console.log('Vote recorded!', data)
+    alert(`You voted: ${userChoice}`)
+  }
+}
