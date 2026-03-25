@@ -39,7 +39,7 @@
         const SUPABASE_URL = 'https://pahedftgixbhrkpvwbag.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhaGVkZnRnaXhiaHJrcHZ3YmFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMDY1NTMsImV4cCI6MjA4OTg4MjU1M30.6f673eZTFSFvErKvslm3rYf_BIIkXUSxOLCoY1E_RNQ';
         
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         let myChart;
         const voteCounts = { 'Great': 0, 'Okay': 0, 'Boring': 0 };
@@ -63,7 +63,7 @@
 
         // Function: Send a vote to Supabase
         async function castVote(choice) {
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from('votes')
                 .insert([{ choice: choice }]);
             
